@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">Niis Bay N logo</title>
+  <desc id="desc">A curved letter N inspired by the Bay of Angels, with three nodes representing supervised agents.</desc>
+  <rect x="4" y="4" width="120" height="120" rx="34" fill="#F4F7F6" stroke="#CBD8D7" stroke-width="2"/>
+  <path d="M34 92V34M94 34V92" fill="none" stroke="#164E63" stroke-width="9" stroke-linecap="round"/>
+  <path d="M34 92C51 98 63 81 73 62C82 46 88 36 94 34" fill="none" stroke="#178CA4" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="34" cy="92" r="5" fill="#D97757"/>
+  <circle cx="69" cy="69" r="5" fill="#D97757"/>
+  <circle cx="94" cy="34" r="5" fill="#D97757"/>
+</svg>

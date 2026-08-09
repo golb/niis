@@ -1,0 +1,64 @@
+{
+  "name": "niis",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Local supervised orchestration for coding agents.",
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Roman Yufimov",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/golb/niis.git"
+  },
+  "homepage": "https://github.com/golb/niis#readme",
+  "bugs": {
+    "url": "https://github.com/golb/niis/issues"
+  },
+  "keywords": [
+    "agent",
+    "automation",
+    "codex",
+    "orchestration",
+    "supervised"
+  ],
+  "workspaces": [
+    "packages/cli",
+    "packages/core",
+    "packages/ui"
+  ],
+  "scripts": {
+    "niis": "node packages/cli/bin/niis.js",
+    "init": "node packages/cli/bin/niis.js init",
+    "attach": "node packages/cli/bin/niis.js attach",
+    "profile": "node packages/cli/bin/niis.js profile",
+    "doctor": "node packages/cli/bin/niis.js doctor",
+    "proof:bootstrap": "node scripts/run-proof-isolated.mjs packages/cli/scripts/bootstrap-proof.js --validation-surface-root .",
+    "proof:host-local-runtimes": "node scripts/run-proof-isolated.mjs packages/cli/scripts/host-local-runtimes-proof.js",
+    "proof:install-attach": "node scripts/run-proof-isolated.mjs packages/cli/scripts/install-attach-proof.js",
+    "proof:local-runtimes": "node scripts/run-proof-isolated.mjs packages/cli/scripts/local-runtimes-proof.js",
+    "proof:npx-bootstrap": "node scripts/run-proof-isolated.mjs packages/cli/scripts/npx-bootstrap-proof.js",
+    "proof:package-extensibility": "node scripts/run-proof-isolated.mjs packages/cli/scripts/package-extensibility-proof.js",
+    "proof:upgrade-plan": "node scripts/run-proof-isolated.mjs packages/cli/scripts/upgrade-plan-proof.js",
+    "proof:runtime": "node scripts/run-proof-isolated.mjs packages/cli/scripts/runtime-proof.js --validation-surface-root .",
+    "proof:adversarial-import": "node scripts/run-proof-isolated.mjs packages/cli/scripts/adversarial-import-proof.js --validation-surface-root .",
+    "proof:adversarial-activation": "node scripts/run-proof-isolated.mjs packages/cli/scripts/adversarial-activation-proof.js --validation-surface-root .",
+    "proof:adversarial-host-surfaces": "node scripts/run-proof-isolated.mjs packages/cli/scripts/adversarial-host-surfaces-proof.js --validation-surface-root .",
+    "proof:discovery-pipeline-host": "node scripts/run-proof-isolated.mjs packages/cli/scripts/discovery-pipeline-host-proof.js --validation-surface-root .",
+    "proof:discovery-pipeline-repo": "node scripts/run-proof-isolated.mjs packages/cli/scripts/discovery-pipeline-repo-proof.js --validation-surface-root .",
+    "proof:extractability": "node scripts/run-proof-isolated.mjs packages/cli/scripts/extraction-proof.js --host-root .",
+    "proof:ui-browser": "node scripts/run-proof-isolated.mjs packages/cli/scripts/ui-browser-proof.js --smoke-only --port 0",
+    "evals:ui-browser": "node evals/run-isolated-scenarios.js evals/scenarios/ui-browser-proof-suite.json",
+    "evals:proofs": "node evals/run-isolated-scenarios.js",
+    "pack:cli:npx": "node packages/cli/scripts/pack-npx-cli.js",
+    "test": "node scripts/run-tests-with-state-guard.mjs",
+    "sanity:reference-leaks": "node scripts/reference-leak-sanity.mjs",
+    "sanity:reference-hash": "node scripts/reference-leak-sanity.mjs --hash-stdin",
+    "sanity:distribution": "node scripts/oss-release-sanity.mjs",
+    "verify": "npm test && npm run evals:proofs && npm run proof:ui-browser && npm run evals:ui-browser && npm run sanity:reference-leaks",
+    "release:verify": "npm run verify && npm audit --omit=dev --audit-level=low && npm run sanity:distribution",
+    "prepack": "npm run sanity:reference-leaks && npm run sanity:distribution"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

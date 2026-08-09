@@ -1,0 +1,143 @@
+Niis Source-Available License Agreement
+Version 1.1, 7 August 2026
+
+Copyright (c) 2025–2026 Roman Yufimov. All rights reserved.
+
+By accessing, downloading, copying, installing, building, or using Niis, you
+agree to this Agreement. If you do not agree, do not access or use the
+Software.
+
+1. Definitions
+
+"Software" means the Niis source code, documentation, configuration, and
+other files that Roman Yufimov makes available through an authorized Niis
+distribution or release, together with object-code or executable output produced from an
+unmodified copy of those files.
+
+"Authorized Users" means you and, when you use the Software for an
+organization, that organization's employees and individual contractors who
+use it solely for the organization's internal purposes.
+
+2. Source-available free-use license
+
+Subject to this Agreement, you receive a worldwide, royalty-free,
+non-exclusive, non-transferable, and non-sublicensable license to:
+
+a. view and inspect the source code;
+
+b. download and copy an unmodified version of the Software from an authorized
+Niis distribution or release;
+
+c. install dependencies, build, and run that unmodified version for personal,
+educational, nonprofit, government, and internal commercial use; and
+
+d. make reasonable backup copies and provide unmodified internal copies to
+Authorized Users within the same organization.
+
+Installing dependencies, producing mechanical build output, and changing
+user-owned project data or settings through documented configuration and
+extension interfaces do not by themselves modify the Software.
+
+This license continues for each version you lawfully receive unless it is
+terminated under Section 9. Optional services, support, or separately licensed
+features may be offered for a fee without changing this license to the
+Software itself.
+
+3. Restrictions
+
+Except where applicable law gives you a right that cannot be waived, you may
+not:
+
+a. modify, patch, adapt, translate, or create derivative works of the Software;
+
+b. sell, resell, rent, lease, sublicense, transfer, redistribute, publish,
+mirror, or otherwise make the Software, its source code, or its build output
+available to any third party, whether for payment or free of charge;
+
+c. copy or incorporate any part of the Software into another product, or use
+the Software or its implementation to develop or improve a competing product
+or service;
+
+d. operate the Software as a hosted, managed, bureau, or service-provider
+offering for third parties;
+
+e. bypass access, licensing, update, integrity, or security controls; or
+
+f. remove or obscure copyright, license, trademark, or attribution notices.
+
+Sharing a link to an authorized Niis distribution or release is permitted. Use of
+documented extension and interoperability interfaces is permitted when it does
+not otherwise violate this Agreement.
+
+4. Public source and distribution
+
+Niis source code is intentionally made publicly viewable. It is proprietary,
+but it is not confidential merely because it is source code. Public access does
+not make Niis open-source software and does not grant rights beyond those
+expressly stated in this Agreement.
+
+Only Roman Yufimov and expressly authorized distributors may publish,
+redistribute, mirror, sell, or issue Niis repositories, releases, or builds.
+If an authorized distribution is hosted on a public source platform, that
+platform's mandatory terms may permit limited viewing and reproduction through
+its native functionality, including platform-hosted forks. Those platform
+rights do not authorize modification, sale, off-platform redistribution,
+derivative works, or any other use not expressly permitted by this Agreement.
+
+5. Your data and output
+
+As between you and Roman Yufimov, you retain your rights in data you provide
+to the Software and output you create with it. This does not grant rights in
+third-party content, models, services, or software used with Niis.
+
+6. Third-party components
+
+The Software may include third-party components governed by separate license
+terms. Those terms apply to the corresponding components and control if they
+conflict with this Agreement. Required notices are provided with the Software.
+
+7. Ownership and trademarks
+
+Niis and all related intellectual-property rights remain the property of
+Roman Yufimov and applicable licensors. No trademark or branding license is
+granted except the limited right to identify the genuine Software accurately.
+
+8. Updates and availability
+
+Updates may add, change, or remove features. No particular update, service,
+support period, or distribution channel is promised. A new version may be
+offered under updated terms, but updated terms do not retroactively change the
+license for a version you already lawfully received.
+
+9. Termination
+
+This Agreement terminates automatically if you materially breach it and do
+not cure the breach within 14 days after receiving notice, when the breach can
+be cured. Sections 3 through 12 survive termination. On termination, you must
+stop using and delete all copies of the Software, except copies retained only
+where applicable law requires them.
+
+10. Disclaimer
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SOFTWARE IS PROVIDED "AS IS" AND
+"AS AVAILABLE," WITHOUT WARRANTIES OF ANY KIND, EXPRESS, IMPLIED, OR
+STATUTORY, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, TITLE, AND NON-INFRINGEMENT.
+
+11. Limitation of liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, ROMAN YUFIMOV AND CONTRIBUTORS WILL NOT
+BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR
+PUNITIVE DAMAGES, OR FOR LOSS OF DATA, PROFITS, REVENUE, BUSINESS, OR
+GOODWILL, ARISING FROM OR RELATED TO THE SOFTWARE. TOTAL LIABILITY FOR ALL
+CLAIMS WILL NOT EXCEED THE GREATER OF THE AMOUNT YOU PAID FOR THE SOFTWARE IN
+THE 12 MONTHS BEFORE THE CLAIM OR EUR 50. THESE LIMITS APPLY EVEN IF A REMEDY
+FAILS OF ITS ESSENTIAL PURPOSE.
+
+12. General
+
+If a provision is unenforceable, it will be limited to the minimum extent
+necessary and the remaining provisions will continue in effect. Failure to
+enforce a provision is not a waiver. You may not assign this Agreement without
+prior written consent. This Agreement and any separately signed written terms
+are the entire agreement concerning the Software.

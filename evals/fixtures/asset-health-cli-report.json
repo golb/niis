@@ -1,0 +1,64 @@
+{
+  "assets": [
+    {
+      "asset_id": "pkg-review-skill",
+      "asset_kind": "skill",
+      "evidence_refs": [
+        "proof-regression-suite:skill-surface-health"
+      ],
+      "failed_scenarios": 0,
+      "passed_scenarios": 1,
+      "scenario_refs": [
+        {
+          "pass_at_k": 1,
+          "scenario_id": "skill-surface-health",
+          "status": "PASS"
+        }
+      ],
+      "status": "healthy"
+    },
+    {
+      "asset_id": "runtime-default-prompt-surface",
+      "asset_kind": "prompt",
+      "evidence_refs": [
+        "proof-regression-suite:prompt-surface-health"
+      ],
+      "failed_scenarios": 0,
+      "passed_scenarios": 1,
+      "scenario_refs": [
+        {
+          "pass_at_k": 1,
+          "scenario_id": "prompt-surface-health",
+          "status": "PASS"
+        }
+      ],
+      "status": "healthy"
+    },
+    {
+      "asset_id": "cheap-adapter",
+      "asset_kind": "adapter",
+      "evidence_refs": [
+        "proof-regression-suite:route-derived-health-assets"
+      ],
+      "failed_scenarios": 0,
+      "passed_scenarios": 1,
+      "scenario_refs": [
+        {
+          "pass_at_k": 1,
+          "scenario_id": "route-derived-health-assets",
+          "status": "PASS"
+        }
+      ],
+      "status": "healthy"
+    }
+  ],
+  "generated_at": "2026-04-02T16:05:00Z",
+  "output_path": "evals/fixtures/asset-health-cli-report.json",
+  "source_suite_id": "fixture-suite",
+  "summary": {
+    "failing": 0,
+    "healthy": 3,
+    "total": 3,
+    "watch": 0
+  }
+}

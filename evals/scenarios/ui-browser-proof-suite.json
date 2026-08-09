@@ -1,0 +1,216 @@
+{
+  "suite_id": "ui-browser-proof-suite",
+  "description": "Scenario-based eval wrapper for the interactive control-plane proof contour.",
+  "output_path": ".niis/proofs/evals/ui-browser-proof-suite.json",
+  "scenarios": [
+    {
+      "id": "ui-browser-proof-prepare-read-only",
+      "description": "The UI browser proof preserves the static ui --output contour as a read-only dashboard export.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/ui-browser-proof.js",
+        "--prepare-only",
+        "--workspace-root",
+        ".niis/proofs/ui-browser-proof/workspace"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/ui",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_object_values_all_equal",
+          "path": "artifact_checks",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "render_summary.route_mode",
+          "equals": "read_only_dashboard"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "render_summary.has_post_forms",
+          "equals": false
+        },
+        {
+          "type": "json_field_equals",
+          "path": "render_summary.has_control_plane_routes",
+          "equals": false
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/workspace/.niis/proofs/ui-browser/render-summary.json",
+          "path": "route_mode",
+          "equals": "read_only_dashboard"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/workspace/.niis/proofs/ui-browser/render-summary.json",
+          "path": "has_post_forms",
+          "equals": false
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/workspace/.niis/proofs/ui-browser/render-summary.json",
+          "path": "has_task_detail_catalog",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "id": "ui-browser-proof-smoke-interactive",
+      "description": "The UI browser proof drives create+start, approval handling, and run-detail rendering through the served local control plane.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/ui-browser-proof.js",
+        "--smoke-only",
+        "--workspace-root",
+        ".niis/proofs/ui-browser-proof/smoke-workspace",
+        "--port",
+        "0"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/ui",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_object_values_all_equal",
+          "path": "artifact_checks",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.home_ok",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.health_ok",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.read_only_export.route_mode",
+          "equals": "read_only_dashboard"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.read_only_export.has_post_forms",
+          "equals": false
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.interactive_mutations.start",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.interactive_mutations.approval_approve",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.created_task.plan_approved",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.created_task.workbench_ok",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.approval.before_queue_visible",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.run_detail.page_ok",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.run_detail.validator_decisions",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "serve_summary.run_detail.produced_artifacts",
+          "equals": true
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/smoke-workspace/.niis/proofs/ui-browser/serve-summary.json",
+          "path": "health_payload.surface",
+          "equals": "niis_ui"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/smoke-workspace/.niis/proofs/ui-browser/serve-summary.json",
+          "path": "interactive_routes.task_create",
+          "equals": true
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/smoke-workspace/.niis/proofs/ui-browser/serve-summary.json",
+          "path": "interactive_routes.task_workbench",
+          "equals": true
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/smoke-workspace/.niis/proofs/ui-browser/serve-summary.json",
+          "path": "interactive_routes.approval_queue",
+          "equals": true
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/ui-browser-proof/smoke-workspace/.niis/proofs/ui-browser/serve-summary.json",
+          "path": "interactive_routes.run_detail",
+          "equals": true
+        }
+      ]
+    }
+  ]
+}

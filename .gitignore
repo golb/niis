@@ -1,0 +1,47 @@
+# Node tooling
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+.dist/
+dist/
+build/
+*.tsbuildinfo
+
+# Niis runtime state (never commit; per-install)
+.niis/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# Test / coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# Packaged CLI tarballs (produced by pack-npx-cli)
+packages/cli/dist/*.tgz
+packages/cli/*.tgz
+
+# Proof artifacts created by scripts/*proof*.js
+proof-outputs/
+**/proofs-output/
+
+# Temp scratch
+tmp/
+.tmp/

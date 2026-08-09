@@ -1,0 +1,68 @@
+{
+  "actorRole": "validator",
+  "reviewerAgentId": "eval-reviewer",
+  "task": {
+    "id": "eval-preexisting-task",
+    "title": "Classify a pre-existing product failure",
+    "status": "IN_REVIEW",
+    "phase": 8,
+    "priority": "high",
+    "goal_id": null,
+    "depends_on": [],
+    "assigned_to": null,
+    "out_of_scope": [
+      "Repair the host product during the proof slice."
+    ],
+    "rejection_count": 0,
+    "max_rejections": 5,
+    "created_at": "2026-04-02T13:45:00.000Z",
+    "updated_at": "2026-04-02T13:45:00.000Z",
+    "transition_log": []
+  },
+  "runRecord": {
+    "adapter_id": "eval-adapter",
+    "agent_id": "eval-agent",
+    "checkpoint_id": null,
+    "cost": {
+      "tokens_in": 12,
+      "tokens_out": 10,
+      "duration_ms": 50,
+      "estimated_usd": 0.01
+    },
+    "exit_code": 0,
+    "finished_at": "2026-04-02T13:45:10.000Z",
+    "id": "eval-preexisting-run",
+    "invocation_source": "on_demand",
+    "run_log": {
+      "storage": "inline",
+      "ref": null,
+      "bytes": 120,
+      "sha256": "abc123"
+    },
+    "started_at": "2026-04-02T13:45:00.000Z",
+    "status": "COMPLETED",
+    "subtask_id": null,
+    "task_id": "eval-preexisting-task",
+    "task_session_key": null
+  },
+  "evidencePacket": {
+    "authenticity_status": "UNVERIFIED",
+    "items": [
+      {
+        "type": "command_output",
+        "source": "runtime",
+        "content": "Smoke output captured from the host repository baseline.",
+        "raw_output_ref": null
+      }
+    ],
+    "markers": {
+      "checked_urls": [],
+      "auth_surfaces_attempted": [],
+      "browser_live_checks": [],
+      "runtime_evidence_succeeded": true
+    }
+  },
+  "observedOutcome": {
+    "pre_existing_product_failure": "Playwright smoke is already failing on the attached host repository before this task."
+  }
+}

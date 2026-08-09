@@ -1,0 +1,1444 @@
+{
+  "suite_id": "proof-regression-suite",
+  "description": "Scenario-based regression harness for the baseline proof contours.",
+  "output_path": ".niis/proofs/evals/proof-regression-suite.json",
+  "scenarios": [
+    {
+      "id": "bootstrap-proof-baseline",
+      "description": "The bootstrap proof contour stays healthy on a disposable repository.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/bootstrap-proof.js",
+        "--validation-surface-root",
+        "."
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "runtime-proof-agent",
+          "asset_kind": "agent"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_array_all_field_equals",
+          "path": "steps",
+          "entry_field": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_object_values_all_equal",
+          "path": "artifact_checks",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "id": "runtime-proof-baseline",
+      "description": "The runtime proof contour reaches a persisted PASS verdict on a disposable repository.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/runtime-proof.js",
+        "--validation-surface-root",
+        "."
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "runtime-proof-agent",
+          "asset_kind": "agent"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_array_all_field_equals",
+          "path": "steps",
+          "entry_field": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_object_values_all_equal",
+          "path": "artifact_checks",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_verdict",
+          "equals": "PASS"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "lifecycle.stage",
+          "equals": "FINISHED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "lifecycle.promoted",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "lifecycle.state.review.fresh_context",
+          "equals": true
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/runtime/review-output.json",
+          "path": "final_verdict.verdict_class",
+          "equals": "PASS"
+        },
+        {
+          "type": "file_json_array_includes",
+          "file": ".niis/proofs/runtime/explain-output.json",
+          "path": "explainability",
+          "includes": {
+            "decision_type": "GATE",
+            "route_chosen": "validator_lane"
+          }
+        }
+      ]
+    },
+    {
+      "id": "adversarial-import-proof-baseline",
+      "description": "The adversarial import proof approves a candidate from a disposable repository.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/adversarial-import-proof.js",
+        "--validation-surface-root",
+        "evals/fixtures/portable-host",
+        "--source-path",
+        "evals/fixtures/portable-host/README.md"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_array_all_field_equals",
+          "path": "steps",
+          "entry_field": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_object_values_all_equal",
+          "path": "artifact_checks",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_review_status",
+          "equals": "APPROVED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_verdict",
+          "equals": "PASS"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/adversarial-import/readme-md/import-output.json",
+          "path": "adversarial_review.final_verdict.verdict_class",
+          "equals": "PASS"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/adversarial-import/readme-md/import-output.json",
+          "path": "conversion_report.review_status",
+          "equals": "APPROVED"
+        }
+      ]
+    },
+    {
+      "id": "adversarial-activation-proof-baseline",
+      "description": "The adversarial activation proof imports and activates a candidate from a disposable repository.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/adversarial-activation-proof.js",
+        "--validation-surface-root",
+        "evals/fixtures/portable-host",
+        "--source-path",
+        "evals/fixtures/portable-host/README.md"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_array_all_field_equals",
+          "path": "steps",
+          "entry_field": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_object_values_all_equal",
+          "path": "artifact_checks",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "import_final_review_status",
+          "equals": "APPROVED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_allowed",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_activation_status",
+          "equals": "ACTIVE"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_verdict",
+          "equals": "PASS"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/adversarial-activation/activate-output.json",
+          "path": "adversarial_review.final_verdict.verdict_class",
+          "equals": "PASS"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/adversarial-activation/activate-output.json",
+          "path": "package_manifest.activation_status",
+          "equals": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "id": "adversarial-host-surfaces-proof-baseline",
+      "description": "The live host-surface proof accepts every semantically discovered surface without pinning the result to an obsolete repository layout; exact ranking remains covered by deterministic fixtures.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/adversarial-host-surfaces-proof.js",
+        "--validation-surface-root",
+        "evals/fixtures/portable-host"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "all_ok",
+          "equals": true
+        },
+        {
+          "type": "json_field_gte",
+          "path": "surface_count",
+          "gte": 1
+        },
+        {
+          "type": "json_array_all_field_equals",
+          "path": "surface_results",
+          "entry_field": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_array_includes",
+          "path": "surface_results",
+          "includes": {
+            "activation_allowed": true,
+            "category": "package_manifest",
+            "final_verdict": "PASS",
+            "ok": true
+          }
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/adversarial-host-surfaces/summary.json",
+          "path": "all_ok",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "id": "extractability-proof-baseline",
+      "description": "The extractability proof blocks source/build dependencies while reporting explicit CI integrations and prose references as non-blocking warnings.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/extraction-proof.js",
+        "--host-root",
+        "."
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "ok",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "blocking_host_repo_references.length",
+          "equals": 0
+        }
+      ]
+    },
+    {
+      "id": "review-preexisting-failure-attribution",
+      "description": "The review lane records a pre-existing product failure separately from task-local defects.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/bin/niis.js",
+        "review",
+        "evals/fixtures/review-preexisting-failure-spec.json"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "evidence_authenticity",
+          "asset_kind": "validator"
+        },
+        {
+          "asset_id": "security_scan",
+          "asset_kind": "validator"
+        },
+        {
+          "asset_id": "completion_proof",
+          "asset_kind": "validator"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_verdict.verdict_class",
+          "equals": "DEFECT"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_verdict.failure_attribution",
+          "equals": "pre_existing_product"
+        }
+      ]
+    },
+    {
+      "id": "review-task-local-defect-attribution",
+      "description": "The review lane records a task-local defect separately from pre-existing product failures.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/bin/niis.js",
+        "review",
+        "evals/fixtures/review-task-local-defect-spec.json"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "evidence_authenticity",
+          "asset_kind": "validator"
+        },
+        {
+          "asset_id": "security_scan",
+          "asset_kind": "validator"
+        },
+        {
+          "asset_id": "completion_proof",
+          "asset_kind": "validator"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_verdict.verdict_class",
+          "equals": "DEFECT"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_verdict.failure_attribution",
+          "equals": "task_local"
+        }
+      ]
+    },
+    {
+      "id": "prompt-surface-health",
+      "description": "The runtime prompt surface remains executable and structured for downstream reuse.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/prompt-surface-health.js"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "runtime-default-prompt-surface",
+          "asset_kind": "prompt"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_gte",
+          "path": "fragment_count",
+          "gte": 4
+        },
+        {
+          "type": "json_array_includes",
+          "path": "prompt_kinds",
+          "includes": "reference_bundle"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "prompt_contains_runtime_banner",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "id": "skill-surface-health",
+      "description": "A reusable skill package remains discoverable and activatable through the package runtime.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/skill-surface-health.js"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "pkg-review-skill",
+          "asset_kind": "skill"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "candidate_count",
+          "equals": 1
+        },
+        {
+          "type": "json_field_equals",
+          "path": "discovered_type",
+          "equals": "skill"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "discovered_activation_status",
+          "equals": "REVIEW"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_allowed",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activated_status",
+          "equals": "ACTIVE"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "skill_id",
+          "equals": "pkg-review-skill"
+        }
+      ]
+    },
+    {
+      "id": "discovery-pipeline-proof",
+      "description": "The incremental discovery pipeline partitions seeker scopes, suppresses cross-seeker duplicates, and emits immediate downstream follow-up subtasks.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/discovery-pipeline-proof.js"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "scope_count",
+          "equals": 3
+        },
+        {
+          "type": "json_field_equals",
+          "path": "parallel_ready_seeker_count",
+          "equals": 2
+        },
+        {
+          "type": "json_field_equals",
+          "path": "final_candidate_count",
+          "equals": 2
+        },
+        {
+          "type": "json_field_equals",
+          "path": "duplicate_count",
+          "equals": 1
+        },
+        {
+          "type": "json_field_equals",
+          "path": "downstream_subtask_count",
+          "equals": 2
+        },
+        {
+          "type": "json_array_includes",
+          "path": "source_kinds",
+          "includes": "local_filesystem"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "source_kinds",
+          "includes": "registry"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "candidate_package_ids",
+          "includes": "pkg-alpha"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "candidate_package_ids",
+          "includes": "pkg-gamma"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "duplicate_dedup_keys",
+          "includes": "package:pkg-alpha"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "downstream_titles",
+          "includes": "Review discovery candidate Alpha (shipped_capability) for follow-up learning or documentation"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/discovery-pipeline/summary.json",
+          "path": "report_id",
+          "equals": "discovery-pipeline-proof"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/discovery-pipeline/summary.json",
+          "path": "downstream_subtask_count",
+          "equals": 2
+        }
+      ]
+    },
+    {
+      "id": "discovery-pipeline-host-proof",
+      "description": "The incremental discovery pipeline stays healthy against the current real-code Niis package workspace while suppressing a registry mirror duplicate.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/discovery-pipeline-host-proof.js"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "report_id",
+          "equals": "discovery-pipeline-host-proof"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "has_core_candidate",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "has_cli_candidate",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "helper_candidate_detected",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "duplicate_core_detected",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "parallel_ready_seeker_count",
+          "equals": 2
+        },
+        {
+          "type": "json_field_gte",
+          "path": "final_candidate_count",
+          "gte": 3
+        },
+        {
+          "type": "json_field_gte",
+          "path": "downstream_subtask_count",
+          "gte": 3
+        },
+        {
+          "type": "json_array_includes",
+          "path": "source_kinds",
+          "includes": "local_filesystem"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "source_kinds",
+          "includes": "registry"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "candidate_package_ids",
+          "includes": "@niis/core"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "candidate_package_ids",
+          "includes": "@niis/cli"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/discovery-pipeline-host/summary.json",
+          "path": "duplicate_core_detected",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "id": "discovery-pipeline-repo-proof",
+      "description": "The incremental discovery pipeline stays healthy against the broader current host repository root while still detecting the embedded Niis workspace and a mirrored registry duplicate.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/scripts/discovery-pipeline-repo-proof.js",
+        "--validation-surface-root",
+        "."
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "report_id",
+          "equals": "discovery-pipeline-repo-proof"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "root_package_candidate_detected",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "has_workspace_candidate",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "has_core_candidate",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "has_cli_candidate",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "helper_candidate_detected",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "duplicate_core_detected",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "parallel_ready_seeker_count",
+          "equals": 2
+        },
+        {
+          "type": "json_field_gte",
+          "path": "final_candidate_count",
+          "gte": 5
+        },
+        {
+          "type": "json_field_gte",
+          "path": "downstream_subtask_count",
+          "gte": 5
+        },
+        {
+          "type": "json_array_includes",
+          "path": "source_kinds",
+          "includes": "local_filesystem"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "source_kinds",
+          "includes": "registry"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "candidate_package_ids",
+          "includes": "@niis/core"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "candidate_package_ids",
+          "includes": "@niis/cli"
+        },
+        {
+          "type": "file_json_field_equals",
+          "file": ".niis/proofs/discovery-pipeline-repo/summary.json",
+          "path": "root_package_candidate_detected",
+          "equals": true
+        }
+      ]
+    },
+    {
+      "id": "adversarial-activation-review-plan",
+      "description": "High-stakes activation can opt into a policy-gated attacker/defender/auditor review plan without making it the default path.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/adversarial-activation-review.js"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_allowed",
+          "equals": false
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_status",
+          "equals": "REVIEW"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "blocker_class",
+          "equals": "MISSING_APPROVAL"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "review_plan_mode",
+          "equals": "adversarial"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "review_plan_required",
+          "equals": true
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "attacker"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "defender"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "auditor"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "trigger_surface_types",
+          "includes": "conversion_candidate"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "policy_refs",
+          "includes": "policy/activation_review/v1"
+        }
+      ]
+    },
+    {
+      "id": "adversarial-activation-review-execution",
+      "description": "High-stakes activation can execute the first attacker/defender/auditor review path and promote only after the final auditor PASS.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/adversarial-activation-execution.js",
+        "pass"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_allowed",
+          "equals": true
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_status",
+          "equals": "ACTIVE"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "adversarial_final_verdict",
+          "equals": "PASS"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "adversarial_summary_route",
+          "equals": "adversarial_review"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "attacker"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "defender"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "auditor"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_verdicts",
+          "includes": "DEFECT"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_verdicts",
+          "includes": "PASS"
+        }
+      ]
+    },
+    {
+      "id": "adversarial-activation-review-escalation",
+      "description": "High-stakes activation can execute attacker/defender/auditor review and stay in REVIEW when the final auditor returns NEEDS_ESCALATION.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/adversarial-activation-execution.js",
+        "escalate"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_allowed",
+          "equals": false
+        },
+        {
+          "type": "json_field_equals",
+          "path": "activation_status",
+          "equals": "REVIEW"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "adversarial_final_verdict",
+          "equals": "NEEDS_ESCALATION"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "blocker_class",
+          "equals": "MISSING_APPROVAL"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "scenario_mode",
+          "equals": "escalate"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_verdicts",
+          "includes": "PARTIAL_PROGRESS"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_verdicts",
+          "includes": "NEEDS_ESCALATION"
+        }
+      ]
+    },
+    {
+      "id": "adversarial-import-review-execution",
+      "description": "High-stakes import can execute attacker/defender/auditor review and approve the conversion report only after the final auditor PASS.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/adversarial-import-execution.js",
+        "approve"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "conversion_review_status",
+          "equals": "APPROVED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "package_activation_status",
+          "equals": "REVIEW"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "adversarial_final_verdict",
+          "equals": "PASS"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "adversarial_summary_route",
+          "equals": "adversarial_review"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "scenario_mode",
+          "equals": "approve"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "attacker"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "defender"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_roles",
+          "includes": "auditor"
+        }
+      ]
+    },
+    {
+      "id": "adversarial-import-review-escalation",
+      "description": "High-stakes import can execute attacker/defender/auditor review and keep the conversion report pending when the final auditor returns NEEDS_ESCALATION.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/adversarial-import-execution.js",
+        "escalate"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "conversion_review_status",
+          "equals": "PENDING"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "package_activation_status",
+          "equals": "REVIEW"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "adversarial_final_verdict",
+          "equals": "NEEDS_ESCALATION"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "blocker_class",
+          "equals": "MISSING_APPROVAL"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "scenario_mode",
+          "equals": "escalate"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_verdicts",
+          "includes": "PARTIAL_PROGRESS"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "review_stage_verdicts",
+          "includes": "NEEDS_ESCALATION"
+        }
+      ]
+    },
+    {
+      "id": "asset-health-cli-skill-view",
+      "description": "The asset-health CLI reads and filters a derived health report for a reusable skill.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/bin/niis.js",
+        "asset-health",
+        "--path",
+        "evals/fixtures/asset-health-cli-report.json",
+        "--asset-kind",
+        "skill"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "summary.total",
+          "equals": 1
+        },
+        {
+          "type": "json_array_includes",
+          "path": "assets",
+          "includes": {
+            "asset_id": "pkg-review-skill",
+            "asset_kind": "skill",
+            "status": "healthy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "asset-health-cli-adapter-view",
+      "description": "The asset-health CLI reads and filters a derived health report for a reusable adapter.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "packages/cli/bin/niis.js",
+        "asset-health",
+        "--path",
+        "evals/fixtures/asset-health-cli-report.json",
+        "--asset-kind",
+        "adapter"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/cli",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "summary.total",
+          "equals": 1
+        },
+        {
+          "type": "json_array_includes",
+          "path": "assets",
+          "includes": {
+            "asset_id": "cheap-adapter",
+            "asset_kind": "adapter",
+            "status": "healthy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "route-derived-health-assets",
+      "description": "The selected route manifest carries declared health assets into the route plan payload.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/route-health-assets.js"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        },
+        {
+          "asset_id": "cheap-adapter",
+          "asset_kind": "adapter"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "selected_adapter_id",
+          "equals": "cheap-adapter"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "selected_lane.lane_id",
+          "equals": "frontend"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "selected_lane.health_assets",
+          "includes": {
+            "asset_id": "runtime-default-prompt-surface",
+            "asset_kind": "prompt"
+          }
+        },
+        {
+          "type": "json_array_includes",
+          "path": "selected_event_payload.health_assets",
+          "includes": {
+            "asset_id": "runtime-default-prompt-surface",
+            "asset_kind": "prompt"
+          }
+        }
+      ]
+    },
+    {
+      "id": "serve-selected-adapter-health-block",
+      "description": "The serve-side asset-health gate blocks dispatch when the selected adapter asset is failing.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/serve-adapter-health.js",
+        "block"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "dispatch_status",
+          "equals": "ASSET_HEALTH_BLOCKED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "task_status",
+          "equals": "BLOCKED"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "blocker_asset_summaries",
+          "includes": "adapter:adapter-health-adapter=failing"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "explainability_routes",
+          "includes": "serve:skip-dispatch:route-asset-health"
+        }
+      ]
+    },
+    {
+      "id": "serve-selected-adapter-health-watch",
+      "description": "The serve-side asset-health gate records explainability while allowing dispatch when the selected adapter asset is watch.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/serve-adapter-health.js",
+        "watch"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "dispatch_status",
+          "equals": "EXECUTED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "task_status",
+          "equals": "IN_REVIEW"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "explainability_asset_summaries",
+          "includes": "adapter:adapter-watch-adapter=watch"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "explainability_routes",
+          "includes": "serve:allow-dispatch:route-asset-health-watch"
+        }
+      ]
+    },
+    {
+      "id": "serve-route-derived-prompt-health-block",
+      "description": "The serve-side asset-health gate blocks dispatch when a selected route manifest declares a failing prompt asset.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/serve-route-health-assets.js",
+        "block"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "dispatch_status",
+          "equals": "ASSET_HEALTH_BLOCKED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "task_status",
+          "equals": "BLOCKED"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "blocker_asset_summaries",
+          "includes": "prompt:runtime-default-prompt-surface=failing"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "explainability_routes",
+          "includes": "serve:skip-dispatch:route-asset-health"
+        }
+      ]
+    },
+    {
+      "id": "serve-route-derived-prompt-health-watch",
+      "description": "The serve-side asset-health gate records explainability while allowing dispatch when a selected route manifest declares a watch prompt asset.",
+      "cwd": ".",
+      "command": "node",
+      "args": [
+        "evals/fixtures/serve-route-health-assets.js",
+        "watch"
+      ],
+      "health_assets": [
+        {
+          "asset_id": "@niis/core",
+          "asset_kind": "package"
+        }
+      ],
+      "attempts": 1,
+      "graders": [
+        {
+          "type": "exit_code_zero"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "dispatch_status",
+          "equals": "EXECUTED"
+        },
+        {
+          "type": "json_field_equals",
+          "path": "task_status",
+          "equals": "IN_REVIEW"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "explainability_asset_summaries",
+          "includes": "prompt:runtime-default-prompt-surface=watch"
+        },
+        {
+          "type": "json_array_includes",
+          "path": "explainability_routes",
+          "includes": "serve:allow-dispatch:route-asset-health-watch"
+        }
+      ]
+    }
+  ]
+}
